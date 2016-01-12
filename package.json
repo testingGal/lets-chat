@@ -98,9 +98,10 @@
     "require-tree": "^1.1.1"
   },
   "devDependencies": {
+    "eslint": "^1.5.0",
     "grunt": "~0.4.5",
     "grunt-bower": "~0.20.0",
     "grunt-bower-task": "~0.4.0",
-    "eslint": "^1.5.0"
+    "mocha": "^2.3.4"
   }
 }
