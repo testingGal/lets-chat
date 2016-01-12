@@ -15,6 +15,7 @@ RUN set -x \
 &&  apt-get update \
 &&  apt-get install -y $BUILD_DEPS --no-install-recommends \
 &&  npm install --production \
+&&  npm install -g eslint \
 &&  npm install $LCB_PLUGINS \
 &&  npm dedupe \
 &&  npm cache clean \
