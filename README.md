@@ -2,7 +2,7 @@
 
 ![Screenshot](http://i.imgur.com/C4uMD67.png)
 
-A self-hosted chat app for small teams or big built by [Security Compass][seccom].
+A self-hosted chat app for small teams or big Gal by [Security Compass][seccom].
 
 [![Build Status](https://travis-ci.org/sdelements/lets-chat.svg?branch=master)](https://travis-ci.org/sdelements/lets-chat)
 [![Dependency Status](https://david-dm.org/sdelements/lets-chat.svg)](https://david-dm.org/sdelements/lets-chat)
