@@ -13,7 +13,9 @@ var Entity = mongoose.model('Test', TestSchema);
 var enitytToSave = new Entity({testField:'test1123232'});
 var db = 'mongodb://admin:hpadmin@ds037415.mongolab.com:37415/hp_mongo';
 var db_local = 'mongodb://192.168.99.100:27017/hp_mongo';
-mongoose.connect(db_local, function(err) {
+var db_docker = 'mongodb://mongo:27017/hp_mongo';
+
+mongoose.connect(db_docker, function(err) {
 
     if (err) {
         console.log(err);

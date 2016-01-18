@@ -5,10 +5,11 @@ var _ = require('lodash'),
     yaml = require('js-yaml'),
     plugins = require('./plugins');
 var path  = require('path');
+var debug = require('debug')('config readers');
 
 function parseEnvValue(value, isArray) {
     value = value.trim();
-    if (isArray) {
+    if (isArray) {s
         return _.map(value.split(','), function(value) {
             return parseEnvValue(value);
         });
@@ -34,6 +35,8 @@ var pipeline = [
         var defaultsPath = path.resolve(execPath,'./defaults.yml');
         var file = fs.readFileSync(defaultsPath, 'utf8');
         context.defaults = yaml.safeLoad(file);
+
+        console.log(JSON.stringify(context.defaults));
     },
 
     function getFileSettings(context) {
@@ -183,5 +186,7 @@ var context = {
 _.each(pipeline, function(step) {
     step(context);
 });
+
+console.log(JSON.stringify(context.result));
 
 module.exports = context.result;

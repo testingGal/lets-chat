@@ -235,7 +235,7 @@ function checkForMongoTextSearch() {
         nun.addGlobal('text_search', true);
         return;
     }
-
+    console.log(JSON.stringify(mongoose.connection.db));
     var admin = new mongoose.mongo.Admin(mongoose.connection.db);
     admin.buildInfo(function (err, info) {
         if (err || !info) {
