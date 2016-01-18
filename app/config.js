@@ -1,9 +1,10 @@
-'use strict';
+
 
 var _ = require('lodash'),
     fs = require('fs'),
     yaml = require('js-yaml'),
     plugins = require('./plugins');
+var path  = require('path');
 
 function parseEnvValue(value, isArray) {
     value = value.trim();
@@ -29,7 +30,9 @@ function parseEnvValue(value, isArray) {
 var pipeline = [
 
     function getDefaultSettings(context) {
-        var file = fs.readFileSync('defaults.yml', 'utf8');
+        var execPath = process.env.CWD || process.cwd();
+        var defaultsPath = path.resolve(execPath,'./defaults.yml');
+        var file = fs.readFileSync(defaultsPath, 'utf8');
         context.defaults = yaml.safeLoad(file);
     },
 
@@ -155,6 +158,9 @@ var pipeline = [
         }
         if (process.env.MONGOLAB_URI) {
             context.result.database.uri = process.env.MONGOLAB_URI;
+        }
+        if (process.env.MONGO_DOCKER) {
+            context.result.database.uri = process.env.MONGO_DOCKER;
         }
     },
 

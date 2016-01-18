@@ -3,10 +3,10 @@
 //
 
 'use strict';
-
+var debug = require('debug')('model->user');
 var bcrypt = require('bcryptjs'),
     crypto = require('crypto'),
-    md5 = require('md5'),
+    md5 =   require('md5'),
     hash = require('node_hash'),
     mongoose = require('mongoose'),
     uniqueValidator = require('mongoose-unique-validator'),
@@ -26,7 +26,8 @@ var UserSchema = new mongoose.Schema({
         required: false,
         trim: true,
         validate: [function(v) {
-            return (v.length <= 24);
+            debug('validation of uid: ' + v.length +"," + v);
+            return (v.length <= 40);
         }, 'invalid ldap/kerberos username']
     },
     email: {
@@ -113,12 +114,14 @@ UserSchema.virtual('avatar').get(function() {
 
 UserSchema.pre('save', function(next) {
     var user = this;
+    debug('presaving');
     if (!user.isModified('password')) {
         return next();
     }
 
     bcrypt.hash(user.password, 10, function(err, hash) {
         if (err) {
+          debug('err:' + err);
             return next(err);
         }
         user.password = hash;
@@ -274,5 +277,11 @@ UserSchema.method('toJSON', function() {
         avatar: this.avatar
     };
 });
+debug('adding model' + UserSchema);
+var s = mongoose.model('User', UserSchema);
 
-module.exports = mongoose.model('User', UserSchema);
+var assert = require('assert');
+assert(mongoose.model('User'));
+
+debug('user schema registered');
+module.exports = s

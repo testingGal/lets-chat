@@ -4,15 +4,15 @@
 # Usage: docker-compose up
 
 app:
-  image: sdelements/lets-chat:latest
+  image: letschat:latest
   links:
     - mongo
   ports:
     - 80:8080
     - 5222:5222
-  command: ls .
-
-
+  environment :
+   - MONGO_DOCKER = mongodb://192.168.99.100:27017/hp_mongo
+  # - DEBUGGER  = "--debug-brk"
 mongo:
   image: mongo:latest
   ports :
