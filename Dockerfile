@@ -6,7 +6,7 @@ RUN cd /src && npm install
 COPY  ./ /src
 RUN npm install -g mocha
 RUN npm install -g istanbul
-
+RUN npm install -g gulp
 WORKDIR /src
 #ENV DEBUG=*
 
