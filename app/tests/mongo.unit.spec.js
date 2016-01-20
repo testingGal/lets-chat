@@ -9,33 +9,41 @@ var TestSchema = new mongoose.Schema({
   //    trim: true
   }
 });
-var Entity = mongoose.model('Test', TestSchema);
+var Entity = mongoose.model('Test1', TestSchema);
 var enitytToSave = new Entity({testField:'test1123232'});
-var db = 'mongodb://admin:hpadmin@ds037415.mongolab.com:37415/hp_mongo';
+var dbRemote = 'mongodb://admin:hpadmin@ds037415.mongolab.com:37415/hp_mongo';
 var db_local = 'mongodb://192.168.99.100:27017/hp_mongo';
 var db_docker = 'mongodb://mongo:27017/hp_mongo';
 
-mongoose.connect(db_docker, function(err) {
+describe('sanity tests', function(done){
 
-    if (err) {
-        console.log(err);
-        throw err;
-    }
+it('test mongo connection' , function(done){
 
-    console.log('mongo is connected');
-    enitytToSave.save(function(err) {
-        //done(err);
-        debug('after save:' + err );
+    mongoose.connect(dbRemote, function(err) {
+
         if (err) {
-            console.log('saved process finished with error')
-            return done(err);
+            console.log(err);
+            throw err;
         }
-        debug('saved succesfully');
-        console.log('saved succesfully');
-        mongoose.connection.close();
-        return;// done(null);
+
+        console.log('mongo is connected');
+        enitytToSave.save(function(err) {
+            //done(err);
+            debug('after save:' + err );
+            if (err) {
+                console.log('saved process finished with error')
+                return done(err);
+            }
+            debug('saved succesfully');
+            console.log('test entity succesfully saved');
+            mongoose.connection.close();
+            return done(null);
+        });
+      });
     });
-  });
+
+});
+
 
 /*Object.keys(user).forEach(function(key) {
     debug('key:' + key);
